@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejercicio.BoxGrid;
+package ejercicioslayout2;
 
 import java.awt.EventQueue;
 import java.awt.HeadlessException;
