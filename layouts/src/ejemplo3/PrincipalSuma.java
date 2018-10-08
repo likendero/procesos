@@ -3,30 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejemplo2;
+package ejemplo3;
 
-import static java.awt.EventQueue.invokeLater;
+import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 /**
  *
  * @author likendero
  */
-public class Principal2 {
-    /**
-     * metodo que inicia la ventana
-     */
+public class PrincipalSuma {
     public static void mostrar(){
-        ventana2 ven = new ventana2();
-        ven.setVisible(true);
+        VentanaSuma ven = new VentanaSuma();
         ven.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ven.setTitle("los tres reyes magos");
+        ven.setVisible(true);
     }
     public static void main(String[] args) {
-        invokeLater(new Runnable() {
+        EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-               mostrar();
+                mostrar();
             }
         });
     }
