@@ -11,7 +11,7 @@ public class Cajera extends Thread
      * constructor que se crea con un cliente por paramentro
      * @param cliente
      */
-    public Cajera(Cliente cliente)
+    public Cajera(Clientes cliente)
     {
         super();
         this.cliente = cliente;
@@ -19,7 +19,7 @@ public class Cajera extends Thread
     /**
      * este metodo procesa la compra de un cliente
      */
-    public atenderCliente()
+    public void atenderCliente()
     {
         long tiempoIncial = System.currentTimeMillis();
         // recorrido de la compra del cliente
@@ -41,7 +41,7 @@ public class Cajera extends Thread
      * procesamiento del cliente
      * @param tiempo tiempo es segundos que se tarda en procesar la compra
      */
-    public procesamiento(int tiempo)
+    public void procesamiento(int tiempo)
     {
         // control que se hace bien la espera
         try
@@ -66,7 +66,7 @@ public class Cajera extends Thread
      * metodo cambia cliente de la cajera
      * @param cliente
      */
-    public void setCliente(Cliente cliente)
+    public void setCliente(Clientes cliente)
     {
         this.cliente = cliente;
     }
