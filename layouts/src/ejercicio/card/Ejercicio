@@ -1,0 +1,9 @@
+El ejercicio consiste en hacer una ventana que a trabes de un 
+card layout nos permita cambiar entre distintos botones
+forma:
+un panel superior con un texto indicando el panel actual
+un panel inferior con cuatro botones:
+    - Primero: mostrar el primer panel
+    - Siguiente: mostrar el siguiente panel
+    - Anterior: mostrar el panel anterior
+    - Ultimo: mostrar el ultimo panel
