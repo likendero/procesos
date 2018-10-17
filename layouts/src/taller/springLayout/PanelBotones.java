@@ -11,4 +11,7 @@ package taller.springLayout;
  */
 public class PanelBotones {
     
+    public PanelBotones(){
+    
+    }
 }
