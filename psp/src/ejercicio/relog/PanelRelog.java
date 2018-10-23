@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ejercicio.relog;
 
 import java.awt.Color;
@@ -16,13 +12,16 @@ import javax.swing.JTextField;
 public class PanelRelog extends JPanel implements Runnable {
     private JTextField relog;
     private int segundos,minutos;
+    private Semaforo semaforo;
     /**
      * metodo constructor principal para el panel del
      * relog, inicializa un panel con un cuadro de texto
      * que al icluir en un ilo ira contando
      */
-    public PanelRelog(){
+    public PanelRelog(Semaforo semaforo){
         super();
+        init();
+        this.
     }
     public void init(){
         relog = new JTextField(20);
@@ -36,7 +35,7 @@ public class PanelRelog extends JPanel implements Runnable {
     @Override
     public void run() {
         while(true){
-            wait();
+            espera();
             incrementar();
             setNuevoTiempo();
         }
@@ -56,10 +55,11 @@ public class PanelRelog extends JPanel implements Runnable {
             segundos = 0;
         }
     }
+    
     /**
      * metodo que detiene un segundo el hilo
      */
-    public void wait(){
+    public void espera(){
         try{
             Thread.sleep(1000);
         }catch(InterruptedException in){
