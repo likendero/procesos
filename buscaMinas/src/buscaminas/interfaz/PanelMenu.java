@@ -16,10 +16,17 @@
  */
 package buscaminas.interfaz;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author likendero
  */
-public class PanelMenu {
-    
+public class PanelMenu extends JPanel {
+    /**
+     * Metodo constructor para el menu
+     */
+    public PanelMenu(){
+        // TODO Panel con group layout: temporizador start , pausa y contador de banderas
+    }
 }

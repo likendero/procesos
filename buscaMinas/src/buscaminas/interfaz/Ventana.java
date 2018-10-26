@@ -16,10 +16,28 @@
  */
 package buscaminas.interfaz;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author likendero
  */
-public class Ventana {
-    
+public class Ventana extends JFrame {
+    private PanelMinas panelMinas;
+    /**
+     * metodo contructor de la ventana
+     * esta en esta ventana habra dos paneles
+     * el panel izquierdo contendra el el panel con los botones
+     */
+    public Ventana(){
+        super();
+        
+    }
+    /**
+     * metodo que incicaliza todos los elementos
+     * de la ventana
+     */
+    private void init(){
+        
+    }
 }
