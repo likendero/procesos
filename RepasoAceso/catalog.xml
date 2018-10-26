@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/home/likendero/github/hcl/RepasoAceso/../../acesoDatos/filez/Scripts/albaran.xsd" uri="xml-resources/jaxb/bindJaxb/albaran.xsd"/>
+</catalog>
