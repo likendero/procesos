@@ -16,6 +16,7 @@
  */
 package buscaminas.interfaz;
 
+import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
 /**
@@ -31,13 +32,17 @@ public class Ventana extends JFrame {
      */
     public Ventana(){
         super();
-        
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        init();
     }
     /**
      * metodo que incicaliza todos los elementos
      * de la ventana
      */
     private void init(){
-        
+        // instanciacion del panel
+        panelMinas = new PanelMinas();
+        // add del panel
+        add(panelMinas,BorderLayout.CENTER);
     }
 }

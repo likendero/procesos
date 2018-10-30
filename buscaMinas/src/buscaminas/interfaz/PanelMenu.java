@@ -20,13 +20,21 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author likendero
+ * @author Javier Gonzalez Rives
  */
 public class PanelMenu extends JPanel {
+    
     /**
      * Metodo constructor para el menu
      */
     public PanelMenu(){
         // TODO Panel con group layout: temporizador start , pausa y contador de banderas
+        super();
+    }
+    /**
+     * metodo que inicializa los elementos del panel
+     */
+    private void init(){
+    
     }
 }

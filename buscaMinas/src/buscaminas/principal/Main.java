@@ -15,13 +15,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package buscaminas.principal;
-
+import buscaminas.interfaz.Ventana;
+import javax.swing.SwingUtilities;
 /**
  *
  * @author likendero
  */
 public class Main {
+    /**
+     * metodo que crea y hace visible la ventana
+     */
     public static void mostrar(){
-    
+        Ventana ventana = new Ventana();
+        ventana.pack();
+        ventana.setVisible(true);
+    }
+    /**
+     * metodo principal incio del programa
+     * @param args 
+     */
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                mostrar();
+            }
+        });
     }
 }

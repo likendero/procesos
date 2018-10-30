@@ -38,6 +38,7 @@ public class PanelMinas extends JPanel {
         super();
         this.alto = 8;
         this.ancho = 8;
+        init();
     }
     /**
      * metodo constructor que define las dimensiones de 
@@ -49,6 +50,7 @@ public class PanelMinas extends JPanel {
         super();
         this.alto = alto;
         this.ancho = ancho;
+        init();
     }
     /**
      * metodo que define la matriz de minas de forma cuadrada, 
@@ -59,6 +61,7 @@ public class PanelMinas extends JPanel {
         super();
         this.alto = dimCuadrada;
         this.ancho = dimCuadrada;
+        init();
     }
     /**
      *  metodo que incializa todos los elementos del panel
