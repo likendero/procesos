@@ -16,6 +16,7 @@
  */
 package buscaminas.interfaz;
 
+import buscaminas.logica.Semaforo;
 import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -105,4 +106,9 @@ public class PanelMinas extends JPanel {
         }
         return this.btnMinas[alto][ancho];
     }
+
+    public JButton[][] getBtnMinas() {
+        return btnMinas;
+    }
+  
 }

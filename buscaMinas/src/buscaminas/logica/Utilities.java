@@ -16,22 +16,26 @@
  */
 package buscaminas.logica;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author likendero
  */
-public class BuscaMinasPrueba {
-    public static void main(String[] args) {
-        try{
-            MatrizMinas matriz = new MatrizMinas();
-            matriz.pintarMatriz();
-            matriz.ponerMinas();
-            matriz.pintarMatriz();
-            matriz.completarMatriz();
-            matriz.pintarMatriz();
-        }catch(Exception ex){
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
+public class Utilities {
+    /**
+     * metodo que devuelve el icono indicado
+     * @param dir
+     * @return
+     * @throws MalformedURLException 
+     */
+    public static Icon getIcon(String dir){
+        
+        // creacion del imageIcon con el url de la imagen
+        ImageIcon icon = new ImageIcon(dir);
+        return icon;
     }
 }

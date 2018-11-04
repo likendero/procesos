@@ -16,6 +16,7 @@
  */
 package buscaminas.interfaz;
 
+import buscaminas.logica.Control;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
@@ -25,6 +26,8 @@ import javax.swing.JFrame;
  */
 public class Ventana extends JFrame {
     private PanelMinas panelMinas;
+    private PanelMenu panelMenu;
+    private Control control;
     /**
      * metodo contructor de la ventana
      * esta en esta ventana habra dos paneles
@@ -33,6 +36,8 @@ public class Ventana extends JFrame {
     public Ventana(){
         super();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setBounds(100, 100,600, 600);
+        setResizable(false);
         init();
     }
     /**
@@ -40,9 +45,14 @@ public class Ventana extends JFrame {
      * de la ventana
      */
     private void init(){
-        // instanciacion del panel
+        // instanciacion del panel minas
         panelMinas = new PanelMinas();
+        // instanciacion del panel menu
+        panelMenu = new PanelMenu();
+        // control
+        control = new Control(panelMinas, panelMenu);
         // add del panel
         add(panelMinas,BorderLayout.CENTER);
+        add(panelMenu,BorderLayout.LINE_END);
     }
 }

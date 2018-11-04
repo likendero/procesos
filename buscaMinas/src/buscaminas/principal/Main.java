@@ -27,7 +27,7 @@ public class Main {
      */
     public static void mostrar(){
         Ventana ventana = new Ventana();
-        ventana.pack();
+        //ventana.pack();
         ventana.setVisible(true);
     }
     /**

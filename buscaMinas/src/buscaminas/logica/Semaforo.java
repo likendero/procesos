@@ -18,20 +18,28 @@ package buscaminas.logica;
 
 /**
  *
- * @author likendero
+ * @author Javier Gonzalez Rives
  */
-public class BuscaMinasPrueba {
-    public static void main(String[] args) {
-        try{
-            MatrizMinas matriz = new MatrizMinas();
-            matriz.pintarMatriz();
-            matriz.ponerMinas();
-            matriz.pintarMatriz();
-            matriz.completarMatriz();
-            matriz.pintarMatriz();
-        }catch(Exception ex){
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
+public class Semaforo {
+    private boolean activo;
+    /**
+     * metodo constructor del semaforo
+     */
+    public Semaforo(){
+        super();
+        activo = true;
     }
+
+    public Semaforo(boolean activo) {
+        this.activo = activo;
+    }
+    
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+    
 }

@@ -81,6 +81,7 @@ public class MatrizMinas {
         }if(numTotalCasillas <= num){
             throw new IndexOutOfBoundsException("el numero de bombas no puede ser igual o mayor al de casillas");
         }
+        this.numeroMinas = num;
     }
     /**
      * metodo que coje la matriz del buscaminas
@@ -138,7 +139,75 @@ public class MatrizMinas {
      * el numero de bombas que tienen alrededor
      */
     public void completarMatriz(){
-    
+        /*
+            limRow = limite inferior filas
+            supRow = limite superior filas
+            limcol = limite inferior columnas
+            supcol = limite superior columnas
+        */
+        boolean limCol,limRow,supCol,supRow;
+        limCol = true;
+        limRow = true;
+        supCol = true;
+        supRow = true;
+        // recorrido filas
+        for(int i = 0; i < matrizMinas.length; i++){
+            // recorrido columnas
+            for(int j = 0; j < matrizMinas[i].length ; j++ ){
+                // capturad de los limites
+                limCol = limiteInferiorCol(j);
+                limRow = limiteInferiorRow(i);
+                supCol = limiteSuperiorCol(j);
+                supRow = limiteSuperiorRow(i);
+                ///--------
+                // control para que la posicion no sea una mina
+                if(matrizMinas[i][j] != 9){
+                    // se cambia el valor a 0 ya que no es una mina
+                    matrizMinas[i][j] = 0;
+                    // esquina superior izquierda
+                    if(limCol && supRow){
+                        // si es una mina la casilla se aumenta el numero
+                        if(matrizMinas[i-1][j-1] == 9) matrizMinas[i][j]++; 
+                    }
+                    // centro arriba
+                    if(supRow){
+                        // si es una mina la casilla se aumenta el numero
+                        if(matrizMinas[i-1][j] == 9) matrizMinas[i][j]++; 
+                    }
+                    // esquina superior derecha
+                    if(supCol && supRow){
+                        // si es una mina la casilla se aumenta el numero
+                        if(matrizMinas[i-1][j+1] == 9) matrizMinas[i][j]++; 
+                    }
+                    // centro izquierda
+                    if(limCol){
+                        // si es una mina la casilla se aumenta el numero
+                        if(matrizMinas[i][j-1] == 9) matrizMinas[i][j]++; 
+                    }
+                    // centro derecha ciudadanos
+                    if(supCol){
+                        // si es una mina la casilla se aumenta el numero
+                        if(matrizMinas[i][j+1] == 9) matrizMinas[i][j]++; 
+                    }
+                    // esquina superior izquierda
+                    if(limCol && limRow){
+                        // si es una mina la casilla se aumenta el numero
+                        if(matrizMinas[i+1][j-1] == 9) matrizMinas[i][j]++; 
+                    }
+                    // centro abajo
+                    if(limRow){
+                        // si es una mina la casilla se aumenta el numero
+                        if(matrizMinas[i+1][j] == 9) matrizMinas[i][j]++; 
+                    }
+                    // esquina inferior derecha
+                    if(supCol && limRow){
+                        // si es una mina la casilla se aumenta el numero
+                        if(matrizMinas[i+1][j+1] == 9) matrizMinas[i][j]++; 
+                    }
+                }
+                
+            }
+        }
     }
     /**
      * metodo que saca por pantalla la matriz 
@@ -151,8 +220,70 @@ public class MatrizMinas {
             for(int j = 0; j < this.matrizMinas[i].length;j++){
                 System.out.print(" " + this.matrizMinas[i][j] + " ");
             }
-            // las filas acaban por un corchete cerrado
+            // las filas acaban por un corchete cerrado0
             System.out.println("]");
         }
     }
+    /**
+     * metodo que comprueba el limite inferior de la posicion
+     * @param col
+     * @return 
+     */
+    private boolean limiteInferiorCol(int col){
+        // caso que haya hueco por debajo
+        if(col > 0){
+            return true;
+        }
+        // caso no halla hueco
+        else{
+            return false;
+        }
+    }
+    /**
+     * metodo que comprueba el limite inferor de las filas
+     * @return 
+     */
+    private boolean limiteInferiorRow(int row){
+        // caso que haya hueco por debajo
+        if(row < this.matrizMinas[0].length-1){
+            return true;
+        }
+        // caso no halla hueco
+        else{
+            return false;
+        }
+    }
+    /**
+     * metodo que devuelve si la posicion tiene filas por arriba
+     * @return 
+     */
+    private boolean limiteSuperiorCol(int col){
+        // si la columno no se pasa
+        if(this.matrizMinas.length-1  > col){
+            return true;
+        }
+        // si la columna se pasa
+        return false;
+    }
+    /**
+     * metodo que comprueba si la posicion tiene posiciones superiores
+     * @return 
+     */
+    private boolean limiteSuperiorRow(int row){
+        // si la columno no se pasa
+        if(0 < row){
+            return true;
+        }
+        // si la columna se pasa
+        return false;
+    }
+
+    public int[][] getMatrizMinas() {
+        return matrizMinas;
+    }
+
+    public int getNumeroMinas() {
+        return numeroMinas;
+    }
+    
 }
