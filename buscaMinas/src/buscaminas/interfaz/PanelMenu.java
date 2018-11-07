@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import javax.swing.Box;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -147,9 +148,9 @@ public class PanelMenu extends JPanel {
         // control de caso de error en la ruta
         
             // imagen para bandera
-            lbImagenBandera.setIcon(Utilities.getIcon("src/imgp/bandera.jpg"));
+            lbImagenBandera.setIcon(new ImageIcon(getClass().getResource("/imgp/bandera.jpg")));
             // imagen para reloj
-            lbImagenRelog.setIcon(Utilities.getIcon("src/imgp/reloj1.jpg"));
+            lbImagenRelog.setIcon(new ImageIcon(getClass().getResource("/imgp/reloj1.jpg")));
         /*
             // quitar todos los iconos para poner textos
             lbImagenRelog.setIcon(null);

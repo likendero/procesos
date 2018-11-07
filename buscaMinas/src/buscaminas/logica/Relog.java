@@ -27,6 +27,7 @@ public class Relog extends Thread{
     private int segundos,minutos;
     private Semaforo semaforo;
     
+    
     public Relog(JTextField cuadro,Semaforo semaforo){
         super();
         segundos = 0;
@@ -37,11 +38,13 @@ public class Relog extends Thread{
 
     @Override
     public void run() {
-        while(semaforo.isActivo()){
-            txRelog.setText(minutos + ":" + segundos);
-            esperar();
-            incrementar();
-            System.out.println(semaforo.isActivo());
+        while(true){
+            while(semaforo.isActivo()){
+                txRelog.setText(minutos + ":" + segundos);
+                esperar();
+                incrementar();
+            }
+            System.out.println("");
         }
     }
     /**
@@ -72,6 +75,13 @@ public class Relog extends Thread{
 
     public Semaforo getSemaforo() {
         return semaforo;
+    }
+    /**
+     * reinciar
+     */
+    public void reiniciar(){
+        segundos = 0;
+        minutos = 0;
     }
     
 }

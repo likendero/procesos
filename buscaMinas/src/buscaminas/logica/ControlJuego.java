@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
@@ -35,6 +36,9 @@ public class ControlJuego implements ActionListener,MouseListener {
     private int col,row;
     private Semaforo semaforo;
     private boolean funcionando;
+    private final int NUMEROMINAS = 8;
+    private int matrizBanderas[][];
+    private JTextField marcadorContadorBanderas;
     /**
      * metodo constructor de la logica de minas
      * @param botones 
@@ -43,11 +47,15 @@ public class ControlJuego implements ActionListener,MouseListener {
         super();
         this.botones = botones;
         this.semaforo = semaforo;
+        this.marcadorContadorBanderas = contador;
         /// init
         matriz = new MatrizMinas(8, 8);
-        matriz.setNumMinas(6);
+        matriz.setNumMinas(NUMEROMINAS);
         matriz.ponerMinas();
         matriz.completarMatriz();
+        // matriz banderas
+        matrizBanderas = new int[8][8];
+        initMatrizBanderas();
         funcionando = false;
         contBanderas = 0;
         contMinas = 0;
@@ -57,7 +65,25 @@ public class ControlJuego implements ActionListener,MouseListener {
         /// add acciones 
         accionesMatrizBotones();
         matriz.pintarMatriz();
+        // primera actualizacion del contador
+        actualizarMarcadorContador();
     }
+    /**
+     * metodo que inicializa la matriz de banderas 
+     */
+    private void initMatrizBanderas(){
+        //recorrido de la matriz banderas
+        for(int i = 0; i < matrizBanderas.length; i++){
+            for(int j = 0; j < matrizBanderas.length; j++){
+                // se inicializan todos los elementos a 0
+                matrizBanderas[i][j] = 0;
+            }
+        }
+    }
+    /**
+     * matriz que annade las acciones a la
+     * matriz de botones
+     */
     private void accionesMatrizBotones(){
         for(int i = 0; i < botones.length; i++){
             for(int j = 0; j < botones[0].length;j++){
@@ -71,6 +97,26 @@ public class ControlJuego implements ActionListener,MouseListener {
      * boton
      */
     private void encontrarPosicion(ActionEvent e){
+            boolean encontrado = false;
+            // control para descubrir que boton se ha pulsado
+            for(int i = 0 ; i < botones.length && !encontrado; i++){
+                for (int j = 0; j < botones[i].length && !encontrado; j++) {
+                    // comprobacion de los botones
+                    if(botones[i][j] == e.getSource()){
+                        // i corresponde a columna
+                        row = i;
+                        // j a la fila
+                        col = j;
+                        encontrado = true;
+                    }
+                }
+        }   
+    }
+    /**
+     * metodo que busca en que posiciones se encuentra el 
+     * boton
+     */
+    private void encontrarPosicion(MouseEvent e){
             boolean encontrado = false;
             // control para descubrir que boton se ha pulsado
             for(int i = 0 ; i < botones.length && !encontrado; i++){
@@ -226,6 +272,7 @@ public class ControlJuego implements ActionListener,MouseListener {
                 // cambio del valor
                 botones[row+1][col].setText(valor + "");
             }
+            
         }
         // esquina inferior derecha
         if(supCol && limRow){
@@ -269,7 +316,7 @@ public class ControlJuego implements ActionListener,MouseListener {
         // caso de pulsar una mina
         if(valor == 9){
             botones[row][col].setEnabled(false);
-            botones[row][col].setIcon(Utilities.getIcon("src/imgp/minasexpult.png"));
+            botones[row][col].setIcon(new ImageIcon(getClass().getResource("/imgp/minasexpult.png")));
             // se devuelve indicacion fin del juego
             semaforo.setActivo(false);
             System.out.println("sem " + semaforo.isActivo());
@@ -281,15 +328,90 @@ public class ControlJuego implements ActionListener,MouseListener {
         if(funcionando){
             // busqueda del boton pulsado
             encontrarPosicion(e);
+            if(botones[row][col].getIcon() == null){
             // comprobacion de tal boton en la matriz de minas
             contrasteMatrizMinas();
+            }
             // cambio de color
             cambioInactivos();
         }
     }
-
+    /**
+     * metodo que realiza la accion de pulsar en la matriz banderas
+     */
+    private void pulsacionMatrizBanderas(){
+        int valor = matrizBanderas[row][col];
+        
+        switch(valor){
+            case 0:
+                if(contBanderas < NUMEROMINAS){
+                    // cambio de valor matriz banderas
+                    matrizBanderas[row][col] = valor+1;
+                    // cambio de icono botones
+                    botones[row][col].setIcon(new ImageIcon(getClass().getResource("/imgp/bandera.jpg")));
+                    contBanderas++;
+                }
+                break;
+            case 1:
+                // cambio de valor matriz banderas
+                matrizBanderas[row][col] = valor+1;
+                // cambio de icono botones
+                botones[row][col].setIcon(new ImageIcon(getClass().getResource("/imgp/bandera2.jpg")));
+                contBanderas--;
+                break;
+            case 2:
+                // cambio de nuevo el valor a 0
+                matrizBanderas[row][col] = 0;
+                // quitar la imagen
+                botones[row][col].setIcon(null);
+                break;
+        }
+        // se actualiza el numero de minas detectadas
+        actualizarMinasDetectadas();
+    }
+    /**
+     * metodo que acutualiza el texto del cuadro
+     * del contdor
+     */
+    private void actualizarMarcadorContador(){
+        marcadorContadorBanderas.setText(contBanderas + "/" + NUMEROMINAS);
+    }
+    /**
+     * metodo que comprueba la matriz de banderas,
+     * cada posicion =1 que coincida con una bomba sumara 1 al contador
+     */
+    private void actualizarMinasDetectadas(){
+        int aux = 0;
+        // recorrido matriz banderas 
+        // TODO revisar como se establece el tamanno la matriz Banderas
+        for(int i = 0; i < matrizBanderas.length; i++){
+            for(int j = 0 ; j < matrizBanderas[i].length; j++){
+                if(
+                        matrizBanderas[i][j] == 1 &&
+                        matriz.getMatrizMinas()[i][j] == 9
+                        ){
+                    aux++;
+                }
+            }
+        }
+        // se actualiza el valor de la variable
+        contMinas = aux;
+    }
     @Override
     public void mouseClicked(MouseEvent e) {
+        if(funcionando && e.getButton() == MouseEvent.BUTTON3) {
+            // captura de la psicion de la accion
+            encontrarPosicion(e);
+            // comprobacion que se trata de un boton pulsable
+            if(botones[row][col].isEnabled()){
+                pulsacionMatrizBanderas();
+            }
+            actualizarMarcadorContador();
+            if(contMinas == NUMEROMINAS){
+                semaforo.setActivo(false);
+            }
+        }
+        
         
     }
 
@@ -321,6 +443,29 @@ public class ControlJuego implements ActionListener,MouseListener {
             for(int j = 0; j < botones[0].length;j++){
                 if(!botones[i][j].isEnabled()){
                     botones[i][j].setBackground(Color.WHITE);
+                    inactivosBanderas();
+                }
+            }
+        }
+        actualizarMarcadorContador();
+    }
+    /**
+     * metodo que se encarga de quitar las banderas de
+     * los botones que se desactiven
+     */
+    private void inactivosBanderas(){
+        // recorrido de la matriz banderas
+        for(int i = 0 ; i < matrizBanderas.length ; i++){
+            for(int j = 0; j < matrizBanderas[i].length; j++){
+                // comprobacion que se halla desactivado un boton que 
+                // tubiese una bandera
+                if(!botones[i][j].isEnabled() && matrizBanderas[i][j] > 0){
+                    // se quita el icono de ese boton
+                    botones[i][j].setIcon(null);
+                    // si era una bandera se quita el icono
+                    if(matrizBanderas[i][j] == 1){
+                        contBanderas--;
+                    }
                 }
             }
         }
@@ -329,12 +474,21 @@ public class ControlJuego implements ActionListener,MouseListener {
      * metodo que resetea el juego
      */
     public void reiniciar(){
+        // reseteo estado de los botones
         setAllInit();
+        // reseteo de la matriz
         matriz = new MatrizMinas(8, 8);
-        matriz.setNumMinas(6);
+        matriz.setNumMinas(NUMEROMINAS);
         matriz.ponerMinas();
         matriz.completarMatriz();
+        // cambio del estado del semaforo
+        semaforo.setActivo(true);
+        // eliminar actividad de los botones
         setFuncionando(false);
+        // formatear matriz banderas
+        initMatrizBanderas();
+        contBanderas = 0;
+        actualizarMarcadorContador();
     }
     /**
      * metodo que cambia el esta
@@ -346,6 +500,7 @@ public class ControlJuego implements ActionListener,MouseListener {
                 botones[i][j].setEnabled(true);
                 botones[i][j].setText("");
                 botones[i][j].setIcon(null);
+                botones[i][j].setBackground(new Color(0,199,212));
             }
         }
     }
@@ -403,17 +558,52 @@ public class ControlJuego implements ActionListener,MouseListener {
         // si la columna se pasa
         return false;
     }
-
+    
+    
+    /**
+     * devuelve el estado de funcionando que controla si se pueden
+     * pulsar botones
+     * @return 
+     */
     public boolean isFuncionando() {
         return funcionando;
     }
-
+    /**
+     * cambiar el estado de funcionando
+     * @param funcionando 
+     */
     public void setFuncionando(boolean funcionando) {
         this.funcionando = funcionando;
     }
-
+    /**
+     * devuelve el estado del semaforo
+     * @deprecated 
+     * @return 
+     */
     public Semaforo getSemaforo() {
         return semaforo;
+    }
+    /**
+     * devuelve el contador con las minas acertadas
+     * @return 
+     */
+    public int getContMinas() {
+        return contMinas;
+    }
+    /**
+     * devuelve el contador con el numero de minas
+     * @return 
+     */
+    public int getContBanderas() {
+        return contBanderas;
+    }
+    /**
+     * metodo que devuelve el numero de minas
+     * del jeugo
+     * @return 
+     */
+    public int getNUMEROMINAS() {
+        return NUMEROMINAS;
     }
     
 }

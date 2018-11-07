@@ -33,9 +33,10 @@ public class Utilities {
      * @throws MalformedURLException 
      */
     public static Icon getIcon(String dir){
-        
+        Object obj = new Object();
         // creacion del imageIcon con el url de la imagen
-        ImageIcon icon = new ImageIcon(dir);
+        ImageIcon icon = new ImageIcon(obj.getClass().getResource(dir));
+        //ImageIcon icon = new ImageIcon(dir);
         return icon;
     }
 }

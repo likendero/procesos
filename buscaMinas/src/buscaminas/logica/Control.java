@@ -21,6 +21,7 @@ import buscaminas.interfaz.PanelMinas;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -63,14 +64,38 @@ public class Control implements ActionListener, Runnable {
         btPausaContinuar.addActionListener(this);
         btStart.addActionListener(this);
         
+        // estado inicial 
+        btPausaContinuar.setEnabled(false);
+        
     }
 
     @Override
     public void run() {
-        while(true){
-            while(controlJuego.getSemaforo().isActivo()){
-            } 
-            semaforoRelog.setActivo(false);
+        while (semaforoJuego.isActivo()) {            
+            System.out.println("");
+        }
+        semaforoRelog.setActivo(false);
+        // caso si ganas
+        if(
+                controlJuego.getContMinas()
+                ==
+                controlJuego.getNUMEROMINAS()
+                ){
+            btPausaContinuar.setEnabled(false);
+            btStart.setEnabled(true);
+            controlJuego.reiniciar();
+            controlJuego.setFuncionando(false);
+            // mensaje si ganas
+            JOptionPane.showMessageDialog(null, "HAS GANADO!!!!","fin del juego",JOptionPane.INFORMATION_MESSAGE);
+            // si pierdes
+        }else{
+            btPausaContinuar.setEnabled(false);
+            btStart.setEnabled(true);
+            controlJuego.reiniciar();
+            controlJuego.setFuncionando(false);
+            // mensaje si ganas
+            JOptionPane.showMessageDialog(null, "HAS PERDIDO D:","fin del juego",JOptionPane.ERROR_MESSAGE);
+            
         }
         
        
@@ -80,14 +105,36 @@ public class Control implements ActionListener, Runnable {
     public void actionPerformed(ActionEvent e) {
         // caso de boton start, inicar partida
         if(btStart == e.getSource()){
+            // activacion el juego
             controlJuego.setFuncionando(true);
+            // creacion del hilo para el juego
             Thread juego = new Thread(this);
-            relog.start();
+            // creacion del hilo para el relog
+            if(!relog.isAlive()){
+                relog.start();
+            }
+            else{
+                relog.reiniciar();
+                semaforoRelog.setActivo(true);
+            }
             juego.start();
+            // desactivar el boton
             btStart.setEnabled(false);
+            btPausaContinuar.setEnabled(true);
         }
         if(btPausaContinuar == e.getSource()){
-            semaforoRelog.setActivo(false);
+            // caso que el boton sea para pausar
+            if(btPausaContinuar.getText().equals("pausa")){
+                semaforoRelog.setActivo(false);
+                btPausaContinuar.setText("continuar");
+                // para que no se pueda seguir pulsando 
+                controlJuego.setFuncionando(false);
+            // caso que el boton sea continuar
+            }else{
+            btPausaContinuar.setText("pausa");
+            semaforoRelog.setActivo(true);
+            controlJuego.setFuncionando(true);
+            }
         }
     }
     
