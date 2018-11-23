@@ -1,6 +1,7 @@
 package bolaModular;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 /**
@@ -60,5 +61,15 @@ public class Raqueta {
      */
     public void sinAccion(){
         dx=0;
+    }
+    /**
+     * metodo que devuelve la caja de colision del circulo
+     * @return 
+     */
+    public Rectangle colisionRectangulo(){
+        // creacion de un rectangulo
+        Rectangle rec = new Rectangle(x, y, 30, 30);
+        // se devuelve el rectangulo
+        return rec;
     }
 }

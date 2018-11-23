@@ -12,17 +12,21 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author likendero
  */
 public class Juego extends Canvas implements Runnable, KeyListener{
+    private Semaforo semaforo;
     private Bola bola/*,bola2,bola3,bola4*/;
     private Raqueta raqueta;
     private Dimension dim;
     private Image imaux;
     private Graphics gaux;
+    private long segundos;
+    private long tiempoJuego;
     /**
      * metodo constructor del juego
      */
@@ -31,6 +35,10 @@ public class Juego extends Canvas implements Runnable, KeyListener{
        raqueta = new Raqueta();
        this.setFocusable(true);
        this.addKeyListener(this);
+       this.semaforo = new Semaforo();
+       // control del tiempo
+       this.segundos = 0;
+       this.tiempoJuego = System.currentTimeMillis();
        /*bola2 = new Bola(this);
        bola3 = new Bola(this);
        bola4 = new Bola(this);
@@ -79,13 +87,25 @@ public class Juego extends Canvas implements Runnable, KeyListener{
 
     @Override
     public void run() {
-        while(true){
+        while(semaforo.isEstado()){
+            // movimiento de la bola
             mover();
+            // repintado de la pantalla
             repaint();
+            // comprobacion del estado de la bola
+            comprobarBola();
             try{
                 Thread.sleep(10);
             }catch(InterruptedException in){
                 System.out.println("error");
+            }
+            this.segundos = (System.currentTimeMillis()-tiempoJuego)/1000;
+            System.out.println("SEGUNDOS: " + segundos);
+            if(this.segundos == 10){ 
+                // reseteo de los segundos
+                this.segundos = 0;
+                //reseteo de la referencia de tiempo
+                tiempoJuego = System.currentTimeMillis();
             }
         }
     }
@@ -109,5 +129,34 @@ public class Juego extends Canvas implements Runnable, KeyListener{
     public void keyReleased(KeyEvent e) {
         raqueta.sinAccion();
     }
+    
+    /**
+     * metodo que comprueba la posicion de la bola
+     */
+    private void comprobarBola(){
+        if(this.bola.getY() == 500-65){
+            Sonido.SOUNDGAMEOVER.play();
+            JOptionPane.showMessageDialog(null,"fin del juego","fin",JOptionPane.INFORMATION_MESSAGE);
+            semaforo.setEstado(false);
+        }
+    }
+    // GETTERS SETTERS
+    public Raqueta getRaqueta() {
+        return raqueta;
+    }
+    
+    public void setRaqueta(Raqueta raqueta) {
+        this.raqueta = raqueta;
+    }
+
+    public long getSegundos() {
+        return segundos;
+    }
+
+    public void setSegundos(long segundos) {
+        this.segundos = segundos;
+    }
+    
+    
     
 }
