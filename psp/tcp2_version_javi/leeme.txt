@@ -1,0 +1,11 @@
+Esta es mi version del servidor con varios usuarios,
+para redistribuir los mensajes he aprobechado el arraylist
+de flujos de salida que se usa para que el servidor se comunique
+comparo el printwriter del usuario con los del arraylist para que 
+no se lo envie a si mismo.
+
+tambien he añadido que un usuario al salir elimine su flujo de la 
+lista para que el servidor no mande mensajes inecesarios.+
+
+para que no de error cuando se corta la comunicacion bruscamente 
+he añadido el catch a nullpointerException.
