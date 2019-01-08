@@ -13,7 +13,7 @@ class Servidor1{
 			System.out.println("!!->> SERVIDOR UDP ACTIVO DURANTE 3m. <<-!!");
 			System.out.println("      -------------------------------      ");
 			conexion.setSoTimeout(180000);
-			//bucle iinfunito para escuchar conexiones entrantes
+			//bucle iinfunito paraescuchar conexiones entrantes
 			while(true){
 				//si nos llega una peticion la guardamos en un datagrampacket lo creamos, lo usamos y mostramos
 				DatagramPacket recibido = new DatagramPacket(new byte[1024], 1024);

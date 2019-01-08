@@ -16,7 +16,6 @@ class Cliente1{
 			System.err.println("Imposible Verificar IP, formato incorrecto!!!!");
 			System.exit(0);
 		}
-
 		int pto=0;
 		try{
 			pto = Integer.parseInt(args[1]);
