@@ -15,6 +15,7 @@ import servidor.HiloServidor;
  * @author Javier Gonzalez Rives
  */
 public class Servidor{
+    
     private static final int puerto = 17777;
     private static int idCliente = 0;
     private static ServerSocket servidor;
@@ -42,9 +43,11 @@ public class Servidor{
                 PrintWriter pw = new PrintWriter(conexion.getOutputStream());
                 // CLiente
                 Cliente cliente = new Cliente(idCliente++, "cliente"+idCliente,bf,pw);
+                // add
+                clientes.add(cliente);
                 // creacion y lanzamiento del hilo
                 HiloClientes hiloClientes = new HiloClientes(clientes, cliente);
-                Thread hilo = new Thread(hiloClientes);
+                Thread hilo = new Thread(hiloClientes,cliente.getNombre());
                 hilo.start();
             }
         }catch(Exception ex){}
