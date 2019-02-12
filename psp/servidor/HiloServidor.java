@@ -83,8 +83,10 @@ public class HiloServidor implements Runnable{
                 // el mensaje se manda por cada Cliente
                 for(Cliente cli: clientes){
                     try{
-                        PrintWriter escritor = cli.getPw();
-                        escritor.println(entrada.trim());
+                        // PrintWriter escritor = cli.getPw();
+                        cli.getPw().println(entrada);
+                        cli.getPw().flush();
+                        //System.out.println(entrada.trim());
                     }catch(Exception ex){
                         System.out.println("Ha ocurrido un error: ");
                         ex.printStackTrace();

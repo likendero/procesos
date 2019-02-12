@@ -44,7 +44,7 @@ public class Cliente{
         this.rd = rd;
     }
     public PrintWriter getPw(){
-        return pw;
+        return this.pw;
     }
     public void setPw(PrintWriter pw){
         this.pw = pw;
